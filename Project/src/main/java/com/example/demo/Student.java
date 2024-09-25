@@ -9,9 +9,18 @@ public class Student {
 	private int id;
 	private String name;
 	private String batch;
-	@Autowired
 	private Subject sub;
 	
+	public Subject getSub() {
+		return sub;
+	}
+
+	// setter based DI
+	@Autowired
+	public void setSub(Subject sub) {
+		this.sub = sub;
+	}
+
 	public void show() {
 		System.out.println("Student Details: ");
 		System.out.println("Student ID: "+ id);
