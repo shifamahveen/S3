@@ -7,6 +7,6 @@
 <title>First JSP</title>
 </head>
 <body>
-	<h1>Hello ${fname} from batch ${batch}</h1>
+	<h1>Batch: ${batch}</h1>
 </body>
 </html>
