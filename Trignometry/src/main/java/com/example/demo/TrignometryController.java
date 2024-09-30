@@ -23,27 +23,27 @@ public class TrignometryController {
 		
 		switch(func) {
 			case "sin": {
-				result = Math.sin(deg);
+				result = Math.sin(rad);
 				break;
 			}
 			case "cos": {
-				result = Math.cos(deg);
+				result = Math.cos(rad);
 				break;
 			}
 			case "tan": {
-				result = Math.tan(deg);
+				result = Math.tan(rad);
 				break;
 			}
 			case "cot": {
-				result = 1/Math.tan(deg);
+				result = 1/Math.tan(rad);
 				break;
 			}
 			case "cosec": {
-				result = 1/Math.sin(deg);
+				result = 1/Math.sin(rad);
 				break;
 			}
 			case "sec": {
-				result = 1/Math.cos(deg);
+				result = 1/Math.cos(rad);
 				break;
 			}
 			default : {
