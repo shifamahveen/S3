@@ -1,5 +1,9 @@
 package com.example.demo;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +14,9 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class TrignometryController {
+	@Autowired
+	private JdbcTemplate template;
+
 	@RequestMapping("/")
 	public String home() {
 		return "index.jsp";
@@ -51,11 +58,32 @@ public class TrignometryController {
 			}
 		}
 		
+		String sql = "insert into trig (angle, func, result) values (?, ?, ?)";
+		template.update(sql, angle, func, result);
+		
 		model.addAttribute("angle", angle);
 		model.addAttribute("func", func);
 		model.addAttribute("result", result);
 		return "result.jsp";
 	}
+	
+	//	get all records
+	@RequestMapping("records")
+	public String records(Model model) {
+		List<Trig> records = template.query(
+			"select * from trig",
+			(rs, rowNum) -> new Trig (
+				rs.getInt("id"),
+				rs.getInt("angle"),
+				rs.getString("func"),
+				rs.getDouble("result")
+			)
+		);	
+		
+		model.addAttribute("records", records);
+		return "records.jsp";
+	}
+	
 //	HttpServletRequest
 	@RequestMapping("demo")
 	public String demo(HttpServletRequest req) {
@@ -65,7 +93,7 @@ public class TrignometryController {
 		int result = 0;
 		
 		HttpSession session = req.getSession();
-		session.setAttribute(", func);
+		session.setAttribute("func", func);
 		return "result.jsp";
 	}
 
