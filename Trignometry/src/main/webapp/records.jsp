@@ -17,6 +17,8 @@
 			<th>Func</th>
 			<th>Angle</th>
 			<th>Result</th>
+			<th>Edit</th>
+			<th>Delete</th>
 		</tr>
 		<c:forEach var="record" items="${records}">
 			<tr>
@@ -24,6 +26,8 @@
 				<td>${record.func}</td>
 				<td>${record.angle}</td>
 				<td>${record.result}</td>
+				<td><a href="edit?id=${record.id}">Edit</a></td>
+				<td><a href="delete/${record.id}">Delete</a></td>
 			</tr>
 		</c:forEach>
 		
