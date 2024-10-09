@@ -9,30 +9,37 @@
 <title>First JSP</title>
 </head>
 <body>
-	<p>Trigonometry Records</p> 
-	
-	<table>
-		<tr>
-			<th>ID</th>
-			<th>Func</th>
-			<th>Angle</th>
-			<th>Result</th>
-			<th>Edit</th>
-			<th>Delete</th>
-		</tr>
-		<c:forEach var="record" items="${records}">
-			<tr>
-				<td>${record.id}</td>
-				<td>${record.func}</td>
-				<td>${record.angle}</td>
-				<td>${record.result}</td>
-				<td><a href="edit?id=${record.id}">Edit</a></td>
-				<td><a href="delete/${record.id}">Delete</a></td>
-			</tr>
-		</c:forEach>
+	<section class="container my-5 p-4 px-5 rounded border border-secondary shadow">
+		<h1 class="mt-3">Trigonometry Records</h1> 
 		
-	</table>
-	
-	<a href="/" class="btn btn-success">Back to home</a>
+		<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Func</th>
+				<th>Angle</th>
+				<th>Result</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+			<c:forEach var="record" items="${records}" varStatus="count">
+				<tr>
+					<td>${count.index+1}</td>
+					<td>${record.func}</td>
+					<td>${record.angle}</td>
+					<td>${record.result}</td>
+					<td><a href="edit?id=${record.id}" class="btn btn-warning">Edit</a></td>
+					<td>
+						<form action="delete/${record.id}" method="POST">
+							<input type="hidden" name="_method" value="DELETE" />
+							<button type="submit" class="btn btn-danger">Delete</button>
+						</form>
+					</td>
+				</tr>
+			</c:forEach>
+			
+		</table>
+		
+		<a href="/" class="btn btn-success mb-3">Back to home</a>
+	</section>
 </body>
 </html>

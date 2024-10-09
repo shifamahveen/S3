@@ -8,7 +8,14 @@
 <title>First JSP</title>
 </head>
 <body>
-	<p>The result of <b>${func}(${angle})</b> is: <b>${result}</b> </p> 
-	<a href="/" class="btn btn-success">Back to home</a>
+	<section class="container my-5 p-4 px-5 rounded border border-secondary shadow">
+
+		<p class="py-4 text-center">The result of <b>${func}(${angle})</b> is: <b>${result}</b> </p> 
+		<div class="d-flex justify-content-center">
+			<a href="/" class="btn btn-success mx-2">Back to home</a>
+			<a href="/records" class="btn btn-info mx-2">View Logs</a>
+		</div>
+		
+	</section>
 </body>
 </html>

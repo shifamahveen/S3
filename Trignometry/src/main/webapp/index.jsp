@@ -8,25 +8,31 @@
 <title>First JSP</title>
 </head>
 <body>
-	<h1>Trignomotery Calculator</h1>
+	<section class="container my-5 p-4 px-5 rounded border border-secondary shadow">
+		<div class="d-flex justify-content-between align-items-center mt-3">
+			<h1>Trignomotery Calculator</h1>
+			<a href="/records" class="btn btn-success">View Logs</a>
+		</div>
+		
+		<form action="calc" method="post" class="mb-3">
+		  <div class="mb-3">
+		    <label for="angle" class="form-label">Angle</label>
+		    <input type="text" class="form-control" id="angle" name="angle"  >
+		  </div>
+		  <div class="mb-3">
+		    <label for="" class="form-label">Trignometry Function</label>
+		    <select class="form-select" name="func" >
+		    	<option value="sin">sin</option>
+		    	<option value="cos">cos</option>
+		    	<option value="tan">tan</option>
+		    	<option value="sec">sec</option>
+		    	<option value="cosec">cosec</option>
+		    	<option value="cot">cot</option>
+		    </select>
+		  </div>
+		  <button type="submit" class="btn btn-primary">Calculate</button>
+		</form>
+	</section>
 	
-	<form action="calc" method="post">
-	  <div class="mb-3">
-	    <label for="angle" class="form-label">Angle</label>
-	    <input type="text" class="form-control" id="angle" name="angle"  >
-	  </div>
-	  <div class="mb-3">
-	    <label for="" class="form-label">Trignometry Function</label>
-	    <select class="form-select" name="func" >
-	    	<option value="sin">sin</option>
-	    	<option value="cos">cos</option>
-	    	<option value="tan">tan</option>
-	    	<option value="sec">sec</option>
-	    	<option value="cosec">cosec</option>
-	    	<option value="cot">cot</option>
-	    </select>
-	  </div>
-	  <button type="submit" class="btn btn-primary">Submit</button>
-	</form>
 </body>
 </html>

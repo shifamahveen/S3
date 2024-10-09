@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +20,12 @@ public class TrignometryController {
 	@Autowired
 	private JdbcTemplate template;
 
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String home() {
 		return "index.jsp";
 	}
 	
-	@RequestMapping("calc")
+	@PostMapping("calc")
 	public String calc(@RequestParam("angle") String angle, @RequestParam("func") String func, Model model) {
 		float deg = Integer.parseInt(angle);
 		double result = 0;
@@ -70,7 +71,7 @@ public class TrignometryController {
 	}
 	
 	//	get all records
-	@RequestMapping("records")
+	@GetMapping("records")
 	public String records(Model model) {
 		List<Trig> records = template.query(
 			"select * from trig",
@@ -86,7 +87,7 @@ public class TrignometryController {
 		return "records.jsp";
 	}
 	
-	@RequestMapping("edit") 
+	@GetMapping("edit") 
 	public String edit(@RequestParam("id") int id, Model model) {
 		@SuppressWarnings("deprecation")
 		Trig record = template.queryForObject(
@@ -104,7 +105,7 @@ public class TrignometryController {
 		return "edit.jsp";
 	}
 	
-	@RequestMapping("update")
+	@PostMapping("update")
 	public String update(@ModelAttribute Trig trig) {
 		String sql = "update trig set angle = ?, func = ?, result = ? where id = ?";
 		int status = template.update(sql, trig.getAngle(), trig.getFunc(), trig.getResult(), trig.getId());
@@ -116,7 +117,7 @@ public class TrignometryController {
 		}
 	}
 	
-	@RequestMapping("delete/{id}")
+	@PostMapping("delete/{id}")
 	public String destroy(@PathVariable int id) {
 		int status  = template.update("delete from trig where id = ?", id);
 		if(status > 0) {

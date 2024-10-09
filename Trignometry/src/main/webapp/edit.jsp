@@ -8,31 +8,35 @@
 <title>Edit Form</title>
 </head>
 <body>
-	<h1>Trignomotery Calculator</h1>
-	
-	<form action="update" method="post">
-		<input type="hidden" name="id" value="${record.id}" />
-	
-	  <div class="mb-3">
-	    <label for="angle" class="form-label">Angle</label>
-	    <input type="text" class="form-control" id="angle" name="angle" value="${record.angle}" >
-	  </div>
-	  <div class="mb-3">
-	    <label for="" class="form-label">Trignometry Function</label>
-	    <select class="form-select" name="func" value="${record.func}" selected>
-	    	<option value="sin">sin</option>
-	    	<option value="cos">cos</option>
-	    	<option value="tan">tan</option>
-	    	<option value="sec">sec</option>
-	    	<option value="cosec">cosec</option>
-	    	<option value="cot">cot</option>
-	    </select>
-	  </div>
-	  <div class="mb-3">
-	    <label for="result" class="form-label">Result</label>
-	    <input type="text" class="form-control" id="result" name="result" value="${record.result}" >
-	  </div>
-	  <button type="submit" class="btn btn-primary">Submit</button>
-	</form>
+	<section class="container my-5 p-4 px-5 rounded border border-secondary shadow">
+
+		<h1>Trignomotery Calculator</h1>
+		
+		<form action="update" method="post">
+			<input type="hidden" name="_method" value="PUT" />
+			<input type="hidden" name="id" value="${record.id}" />
+		
+		  <div class="mb-3">
+		    <label for="angle" class="form-label">Angle</label>
+		    <input type="text" class="form-control" id="angle" name="angle" value="${record.angle}" >
+		  </div>
+		  <div class="mb-3">
+		    <label for="" class="form-label">Trignometry Function</label>
+		    <select class="form-select" name="func" value="${record.func}" selected>
+		    	<option value="sin">sin</option>
+		    	<option value="cos">cos</option>
+		    	<option value="tan">tan</option>
+		    	<option value="sec">sec</option>
+		    	<option value="cosec">cosec</option>
+		    	<option value="cot">cot</option>
+		    </select>
+		  </div>
+		  <div class="mb-3">
+		    <label for="result" class="form-label">Result</label>
+		    <input type="text" class="form-control" id="result" name="result" value="${record.result}" >
+		  </div>
+		  <button type="submit" class="btn btn-primary">Update Record</button>
+		</form>
+	</section>
 </body>
 </html>
