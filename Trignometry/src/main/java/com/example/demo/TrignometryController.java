@@ -87,6 +87,48 @@ public class TrignometryController {
 		return "records.jsp";
 	}
 	
+	@GetMapping("sort")
+	public String sort(Model model, @RequestParam("orderFunc") String orderFunc) {
+		String sql;
+		
+		if(orderFunc.equals("asc")) {
+			sql = "select * from trig order by angle asc";
+		} else {
+			sql = "select * from trig order by angle desc";
+		}
+		
+		List<Trig> records = template.query(
+			sql,
+			(rs, rowNum) -> new Trig (
+				rs.getInt("id"),
+				rs.getInt("angle"),
+				rs.getString("func"),
+				rs.getDouble("result")
+			)
+		);	
+		
+		model.addAttribute("records", records);
+		return "records.jsp";
+	}
+	
+	@GetMapping("search")
+	public String search(Model model, @RequestParam("text") String text) {
+		@SuppressWarnings("deprecation")
+		List<Trig> records = template.query(
+			"select * from trig where func like ?",
+			new String[] {"%" + text + "%"},
+			(rs, rowNum) -> new Trig (
+				rs.getInt("id"),
+				rs.getInt("angle"),
+				rs.getString("func"),
+				rs.getDouble("result")
+			)
+		);	
+		
+		model.addAttribute("records", records);
+		return "records.jsp";
+	}
+	
 	@GetMapping("edit") 
 	public String edit(@RequestParam("id") int id, Model model) {
 		@SuppressWarnings("deprecation")
