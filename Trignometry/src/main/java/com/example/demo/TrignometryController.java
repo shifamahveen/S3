@@ -4,13 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,8 +18,12 @@ public class TrignometryController {
 	private JdbcTemplate template;
 
 	@GetMapping("/")
-	public String home() {
-		return "index.jsp";
+	public String home(HttpServletRequest req) {
+		if(isLoggedIn(req)) {
+			return "index.jsp";
+		} else {
+			return "login.jsp";
+		}
 	}
 	
 	@PostMapping("calc")
@@ -72,19 +73,28 @@ public class TrignometryController {
 	
 	//	get all records
 	@GetMapping("records")
-	public String records(Model model) {
-		List<Trig> records = template.query(
-			"select * from trig",
-			(rs, rowNum) -> new Trig (
-				rs.getInt("id"),
-				rs.getInt("angle"),
-				rs.getString("func"),
-				rs.getDouble("result")
-			)
-		);	
+	public String records(Model model, HttpServletRequest req) {
+		if(isLoggedIn(req)) {
+			String phone = (String) req.getSession().getAttribute("phone");
+			String sql = "select name from users where phone = ?";
+			String name = template.queryForObject(sql, String.class, phone);
+			
+			List<Trig> records = template.query(
+					"select * from trig",
+					(rs, rowNum) -> new Trig (
+						rs.getInt("id"),
+						rs.getInt("angle"),
+						rs.getString("func"),
+						rs.getDouble("result")
+					)
+				);	
+				model.addAttribute("records", records);
+				model.addAttribute("name", name);
+				return "records.jsp";
+		} else {
+			return "login.jsp";
+		}
 		
-		model.addAttribute("records", records);
-		return "records.jsp";
 	}
 	
 	@GetMapping("sort")
@@ -169,32 +179,49 @@ public class TrignometryController {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	HttpServletRequest
-	@RequestMapping("demo")
-	public String demo(HttpServletRequest req) {
-		int a = Integer.parseInt(req.getParameter("angle"));
-		String func = req.getParameter("func");
-		System.out.println(func);
-		int result = 0;
-		
-		HttpSession session = req.getSession();
-		session.setAttribute("func", func);
-		return "result.jsp";
+	@GetMapping("login")
+	public String login() {
+		return "login.jsp";
 	}
-
 	
+	@PostMapping("login")
+	public String loginUser(@RequestParam("phone") String phone, @RequestParam("password") String password, HttpServletRequest req, Model model) {
+		if(isRegistered(phone, password)) {
+			req.getSession().setAttribute("phone", phone);
+			return "redirect:/records";
+		} else {
+			model.addAttribute("error", "User not registered");
+			return "error.jsp";
+		}
+	}
+	
+	public boolean isRegistered(String phone, String password) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		String sql = "select password from users where phone = ?";
+		String storedPassword = template.queryForObject(sql, String.class,phone);
+		
+		return encoder.matches(password, storedPassword);
+	}
+	
+	public boolean isLoggedIn(HttpServletRequest req) {
+		String status = (String) req.getSession().getAttribute("phone");
+		
+		return status != null;
+	}
+	
+	@GetMapping("logout")
+	public String logout(HttpServletRequest req) {
+		HttpSession session = req.getSession(false);
+		String status = (String) session.getAttribute("phone");
+		
+		if(status != null) {
+			session.invalidate();
+			return "login.jsp";
+		} else {
+			session.setAttribute("error", "User not logged in");
+			return "error.jsp";
+		}
+	}
 	
 }

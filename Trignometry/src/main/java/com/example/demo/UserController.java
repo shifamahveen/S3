@@ -7,11 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Controller
 public class UserController {
 	
 	@Autowired
 	private JdbcTemplate template;
+	@Autowired
+	private TrignometryController trig;
 	
 	@GetMapping("register")
 	public String register() {
@@ -23,7 +27,6 @@ public class UserController {
 		String checkUser = "select count(*) from users where phone = ?";
 		Integer status = template.queryForObject(checkUser, Integer.class, user.getPhone());
 		
-		System.out.println(status);
 		if (status > 0) {
 			model.addAttribute("error", "user already registered");
 			return "error.jsp";
@@ -36,4 +39,6 @@ public class UserController {
 			return "index.jsp";
 		}
 	}
+	
+	
 }

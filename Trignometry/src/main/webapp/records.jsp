@@ -23,10 +23,15 @@
 	        <li class="nav-item">
 	          <a class="nav-link" href="records">Records</a>
 	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link" href="logout">Logout</a>
+	        </li>
 	      </ul>
 	    </div>
 	  </div>
 	</nav>
+	
+	<h1>Hello ${name}</h1>
 
 	<section class="container my-5 p-4 px-5 rounded border border-secondary shadow">
 		<h1 class="mt-3">Trigonometry Records</h1> 
