@@ -3,8 +3,7 @@ package com.example.demo;
 public class User {
 	private int id;
 	private String name;
-	private long phone;
-	
+	private String phone;
 	private String email;
 	private String password;
 	private String gender;
@@ -16,10 +15,10 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public long getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(long phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public String getName() {
@@ -52,7 +51,7 @@ public class User {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public User(String name, long phone, String email, String password, String gender, String location) {
+	public User(String name, String phone, String email, String password, String gender, String location) {
 		super();
 		this.name = name;
 		this.phone = phone;

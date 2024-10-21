@@ -79,6 +79,16 @@ public class TrignometryController {
 			String sql = "select name from users where phone = ?";
 			String name = template.queryForObject(sql, String.class, phone);
 			
+			// get role and determine their admin access			
+			String sql1 = "select role from users where phone = ?";
+			String role = template.queryForObject(sql1, String.class, phone);
+			boolean userType;
+			if(role.equals("admin")) {
+				userType = true;
+			} else {
+				userType = false;
+			}
+			
 			List<Trig> records = template.query(
 					"select * from trig",
 					(rs, rowNum) -> new Trig (
@@ -90,6 +100,7 @@ public class TrignometryController {
 				);	
 				model.addAttribute("records", records);
 				model.addAttribute("name", name);
+				model.addAttribute("userType", userType);
 				return "records.jsp";
 		} else {
 			return "login.jsp";
@@ -187,7 +198,13 @@ public class TrignometryController {
 	@PostMapping("login")
 	public String loginUser(@RequestParam("phone") String phone, @RequestParam("password") String password, HttpServletRequest req, Model model) {
 		if(isRegistered(phone, password)) {
+//			get role of user
+			String sql = "select role from users where phone = ?";
+			String role = template.queryForObject(sql, String.class, phone);
+			
 			req.getSession().setAttribute("phone", phone);
+			req.getSession().setAttribute("role", role);
+
 			return "redirect:/records";
 		} else {
 			model.addAttribute("error", "User not registered");
@@ -224,4 +241,31 @@ public class TrignometryController {
 		}
 	}
 	
+	@GetMapping("admin")
+	public String admin(Model model, HttpServletRequest req) {
+		if(!isAdmin(req)) {
+			model.addAttribute("error", "You dont have admin access");
+			return "error.jsp";
+		}
+		
+		List<User> users = template.query(
+				"select * from users",
+				(rs, rowNum) -> new User (
+						rs.getString("name"),
+						rs.getString("phone"),
+						rs.getString("email"),
+						rs.getString("password"),
+						rs.getString("gender"),
+						rs.getString("location")
+					)				
+				);
+				
+		model.addAttribute("users", users);
+		return "users.jsp";
+	}
+	
+	public boolean isAdmin(HttpServletRequest req) {
+		String role = (String) req.getSession().getAttribute("role");
+		return "admin".equals(role);
+	}
 }

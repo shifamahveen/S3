@@ -23,12 +23,9 @@
 	        <li class="nav-item">
 	          <a class="nav-link" href="records">Records</a>
 	        </li>
-	        <c:if test="${userType}">
-		        <li class="nav-item">
-		          <a class="nav-link" href="admin">Admin</a>
-		        </li>
-	        </c:if>
-	        
+	        <li class="nav-item">
+	          <a class="nav-link" href="admin">Admin</a>
+	        </li>
 	        <li class="nav-item">
 	          <a class="nav-link" href="logout">Logout</a>
 	        </li>
@@ -37,7 +34,6 @@
 	  </div>
 	</nav>
 	
-	<h1>Hello ${name}</h1>
 
 	<section class="container my-5 p-4 px-5 rounded border border-secondary shadow">
 		<h1 class="mt-3">Trigonometry Records</h1> 
@@ -46,45 +42,25 @@
 			<table class="table" style="width: 70%">
 				<tr>
 					<th>ID</th>
-					<th>Func</th>
-					<th>Angle</th>
-					<th>Result</th>
-					<th>Edit</th>
-					<th>Delete</th>
+					<th>Name</th>
+					<th>Phone</th>
+					<th>Email</th>
+					<th>Gender</th>
+					<th>Location</th>
 				</tr>
-				<c:forEach var="record" items="${records}" varStatus="count">
+				<c:forEach var="user" items="${users}" varStatus="row">
 					<tr>
-						<td>${count.index+1}</td>
-						<td>${record.func}</td>
-						<td>${record.angle}</td>
-						<td>${record.result}</td>
-						<td><a href="edit?id=${record.id}" class="btn btn-warning">Edit</a></td>
-						<td>
-							<form action="delete/${record.id}" method="POST">
-								<input type="hidden" name="_method" value="DELETE" />
-								<button type="submit" class="btn btn-danger">Delete</button>
-							</form>
-						</td>
+						<td>${row.index+1}</td>
+						<td>${user.name}</td>
+						<td>${user.phone}</td>
+						<td>${user.email}</td>
+						<td>${user.gender}</td>
+						<td>${user.location}</td>
 					</tr>
 				</c:forEach>
 				
 			</table>
 			
-			<div style="width: 25%">
-				<h3>Tools</h3>
-				<form action="search" method="GET" class="d-flex mt-3">
-					<input type="text" name="text" class="form-control rounded-end-0" placeholder="Search here..." />
-					<button type="submit" class="btn btn-info rounded-start-0">Search</button>
-				</form>
-				
-				<form action="sort" method="GET" class="d-flex mt-3">
-					<select name="orderFunc" class="form-select rounded-end-0">
-						<option value="asc">Ascending</option>
-						<option value="desc">Descending</option>
-					</select>
-					<button type="submit" class="btn btn-primary rounded-start-0">Sort</button>
-				</form>
-			</div>
 		</section>
 		
 		<a href="/" class="btn btn-success mb-3">Back to home</a>
