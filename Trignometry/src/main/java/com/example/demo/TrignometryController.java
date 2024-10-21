@@ -20,9 +20,9 @@ public class TrignometryController {
 	@GetMapping("/")
 	public String home(HttpServletRequest req) {
 		if(isLoggedIn(req)) {
-			return "index.jsp";
+			return "index";
 		} else {
-			return "login.jsp";
+			return "login";
 		}
 	}
 	
@@ -68,7 +68,7 @@ public class TrignometryController {
 		model.addAttribute("angle", angle);
 		model.addAttribute("func", func);
 		model.addAttribute("result", result);
-		return "result.jsp";
+		return "result";
 	}
 	
 	//	get all records
@@ -101,9 +101,9 @@ public class TrignometryController {
 				model.addAttribute("records", records);
 				model.addAttribute("name", name);
 				model.addAttribute("userType", userType);
-				return "records.jsp";
+				return "records";
 		} else {
-			return "login.jsp";
+			return "login";
 		}
 		
 	}
@@ -129,7 +129,7 @@ public class TrignometryController {
 		);	
 		
 		model.addAttribute("records", records);
-		return "records.jsp";
+		return "records";
 	}
 	
 	@GetMapping("search")
@@ -147,7 +147,7 @@ public class TrignometryController {
 		);	
 		
 		model.addAttribute("records", records);
-		return "records.jsp";
+		return "records";
 	}
 	
 	@GetMapping("edit") 
@@ -165,7 +165,7 @@ public class TrignometryController {
 			);	
 		System.out.println(record);
 		model.addAttribute("record", record);
-		return "edit.jsp";
+		return "edit";
 	}
 	
 	@PostMapping("update")
@@ -176,7 +176,7 @@ public class TrignometryController {
 		if(status > 0) {
 			return "redirect:/records";
 		} else {
-			return "error.jsp";
+			return "error";
 		}
 	}
 	
@@ -186,13 +186,13 @@ public class TrignometryController {
 		if(status > 0) {
 			return "redirect:/records";
 		} else {
-			return "error.jsp";
+			return "error";
 		}
 	}
 	
 	@GetMapping("login")
 	public String login() {
-		return "login.jsp";
+		return "login";
 	}
 	
 	@PostMapping("login")
@@ -208,7 +208,7 @@ public class TrignometryController {
 			return "redirect:/records";
 		} else {
 			model.addAttribute("error", "User not registered");
-			return "error.jsp";
+			return "error";
 		}
 	}
 	
@@ -234,10 +234,10 @@ public class TrignometryController {
 		
 		if(status != null) {
 			session.invalidate();
-			return "login.jsp";
+			return "login";
 		} else {
 			session.setAttribute("error", "User not logged in");
-			return "error.jsp";
+			return "error";
 		}
 	}
 	
@@ -245,7 +245,7 @@ public class TrignometryController {
 	public String admin(Model model, HttpServletRequest req) {
 		if(!isAdmin(req)) {
 			model.addAttribute("error", "You dont have admin access");
-			return "error.jsp";
+			return "error";
 		}
 		
 		List<User> users = template.query(
@@ -261,7 +261,7 @@ public class TrignometryController {
 				);
 				
 		model.addAttribute("users", users);
-		return "users.jsp";
+		return "users";
 	}
 	
 	public boolean isAdmin(HttpServletRequest req) {
