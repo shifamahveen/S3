@@ -1,40 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=US-ASCII"
-    pageEncoding="US-ASCII"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "https://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<title>First JSP</title>
+
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg bg-body-tertiary">
-	  <div class="container">
-	    <a class="navbar-brand" href="#">Trig App</a>
-	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-	      <span class="navbar-toggler-icon"></span>
-	    </button>
-	    <div class="collapse navbar-collapse" id="navbarNav">
-	      <ul class="navbar-nav">
-	        <li class="nav-item">
-	          <a class="nav-link active" aria-current="page" href="/">Home</a>
-	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link" href="records">Records</a>
-	        </li>
-	      </ul>
-	    </div>
-	  </div>
-	</nav>
-	
-	<section class="container my-5 p-4 px-5 rounded border border-secondary shadow">
+<div class="border border-secondary p-5 m-5 rounded shadow w-50 d-block mx-auto">
+	<h1>The value of ${func}(${angle}) is: ${result}</h1>
 
-		<p class="py-4 text-center">The result of <b>${func}(${angle})</b> is: <b>${result}</b> </p> 
-		<div class="d-flex justify-content-center">
-			<a href="/" class="btn btn-success mx-2">Back to home</a>
-			<a href="/records" class="btn btn-info mx-2">View Logs</a>
-		</div>
-		
-	</section>
+</div>
 </body>
 </html>
